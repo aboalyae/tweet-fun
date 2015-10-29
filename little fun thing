@@ -1,0 +1,124 @@
+MIN_LENGTH = 1
+MAX_LENGTH = 140
+#Write a function that represents a valid tweet
+#Valid tweet has no less than 1 and no more than 140 characters long
+def is_valid_tweet(potential_tweet):
+  ''' (str) -> bool
+  returns true if the potential tweet is between 1 and 140
+  characters long(inclusive)
+  >>> is_valid_tweet('To me programming is more than an important ' \
+  + 'practical art. It is also a gigantic undertaking in the ' \
+  + 'foundations of knowledge. - Grace Hopper')
+  True
+  >>> is_valid_tweet('The best programs are written so that computing ' \
+  + 'machines can perform them quickly and so that human beings can ' \
+  + 'understand them clearly. - Donald Knuth')
+  False
+  >>> is_valid_tweet('')
+  False
+  '''
+  return MIN_LENGTH <= len(potential_tweet) <= MAX_LENGTH
+        
+#Write a function that returns true if and only if the tweet contains a
+#hash symbol
+def contains_hash_symbol(valid_tweet):
+  ''' (str) ->bool
+  returns true if there is a hash symbol in the tweet and false if it doesn't 
+  have a hash symbol
+  >>> contains_hash_symbol('#')
+  True
+  >>> contains_hash_symbol('#1298rocks')
+  True
+  >>> contains_hash_symbol('I love computer science')
+  False
+  >>> contains_hash_symbol('Looking awesome #sunnyday')
+  True
+  '''
+  return '#' in valid_tweet
+#Write a function that finds out if the string is a mention
+#A mention is a username preceded by the character @
+def is_mentioned(valid_tweet2,username):
+  ''' (str,str) -> bool
+  returns true if the tweet mentions that username preceded by @ 
+  and false if it doesn't
+  >>> is_mentioned('Meet the @cssu executive','cssu')
+  True
+  >>> is_mentioned('@csc108 test on friday','csc108')
+  True
+  >>> is_mentioned('@dancing in class', '@dan')   
+  False
+  '''
+  return '@'+ username in valid_tweet2
+        
+#write a function that returns the shortest tweet or same length if 
+#strings are ofsame characters length
+def report_shortest(tweet1,tweet2):
+  ''' (str,str) ->str
+  returns Tweet 1 if it's shorter and Tweet 2 if it's shorter ans Same length 
+  if they have the same characters length
+  pre-condition: tweet1 and tweet2 are strings of any length
+  >>> report_shortest('csc108 rocks','computer science')
+  'Tweet 1'
+  >>> report_shortest('UTM best university','statistics in UTM is the best')
+  ' Tweet 1'
+  >>> report_shortest('Calculus is very hard for first year students','they' \
+  + 'need to practice')
+  'Tweet 2'
+  >>> report_shortest('Enjoying the summer','Enjoying the music.')
+  'Same length'
+  '''
+  if len(tweet1)<len(tweet2):
+    return 'Tweet 1'
+  elif len(tweet2) < len(tweet1):
+    return 'Tweet 2'
+  else:
+    return 'Same length'
+                    
+#Write a function that returns true if the tweet is a reply
+# a reply is a valid tweet that starts with the @ symbol
+def is_reply(valid_tweet3):
+  ''' (str) -> bool
+  returns true if the tweet starts with @ and false if the
+  tweet doesn't start with @
+  >>> is_reply('@csc108 is in DV2072')
+  True
+  >>> is_reply('@UTM saw a deer')
+  True
+  >>> is_reply('csc108 @DV2072')
+  False
+  '''
+  return valid_tweet3[0]=='@'
+        
+#Write a function that returns the reply if it's at most 140 characters
+# otherwise, it returns the extra characters
+def format_reply_to(user_name2,tweet4):
+  '''(str,str) -> str
+  returns the reply tweet if it's at most 140 characters
+  otherwise, it returns the number of extra characters followed by 
+  'characters too long'
+  pre-condition: both parameters are strings, Tweet4 should have the username 
+  mentioned
+  >>> format_reply_to('csc108','it rocks')
+  '@csc108 it rocks'
+  >>> format_reply_to('Eman','it has been a wonderful journay at UTM,' \
+  + 'but it is time to move on to better things in life. I will be attending'\
+  + 'graduate schools doing my masters in statistics. I am very excited to' \
+  + 'try new things in life. It was truly a great experience at U of T.'\
+  + 'Thank you Professors!')
+  '132 characters too long'
+  >>>format_reply_to('@csc108','this class is a wonderful experience for me')
+  '@csc108 this class is a wonderful experience for me'
+  '''
+  if user_name2[0]=='@':
+    reply= user_name2 +' ' +tweet4
+    if len(reply) <= MAX_LENGTH:
+      return reply
+    else:
+      return str(len(reply)-MAX_LENGTH)+ ' '+'characters too long'
+  else:
+    reply= '@' + user_name2 + ' ' +tweet4
+    if len(reply) <=MAX_LENGTH:
+      return reply
+    else:
+      return str(len(reply)-MAX_LENGTH)+ ' ' +'characters too long'
+
